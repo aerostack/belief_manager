@@ -1,0 +1,205 @@
+<!-- Launches: graphical_user_interface;-->
+<launch>
+    <!-- master tag is only obeyed in the top-level file (not in includes) 
+    <master>
+    </master>-->
+    	<arg name="robot_namespace" default="drone1"/>
+
+        <arg name="drone_driver_command_drone_command_pitch_roll" default="command/pitch_roll" />
+        <arg name="drone_driver_command_drone_command_daltitude" default="command/dAltitude" />
+        <arg name="drone_driver_command_drone_command_dyaw" default="command/dYaw" />
+        <arg name="drone_driver_command_drone_hl_command" default="command/high_level" />
+        <arg name="drone_okto_like_simulator_okto_commands_subscriber" default="okto_commands" />
+
+        <arg name="drone_console_interface_command_drone_command_pitch_roll_publication" default="command/pitch_roll" />
+        <arg name="drone_console_interface_command_drone_command_daltitude_publication" default="command/dAltitude" />
+
+        <!-- Sensor - telemetry_state_receiver -->
+            <arg name="drone_driver_sensor_imu" default="imu" />
+            <arg name="drone_driver_sensor_temperature" default="temperature" />
+            <arg name="drone_driver_sensor_magnetometer" default="magnetometer" />
+            <arg name="drone_driver_sensor_battery" default="battery" />
+            <arg name="drone_driver_sensor_altitude" default="altitude" />
+            <arg name="drone_driver_sensor_rotation_angles" default="rotation_angles" />
+            <arg name="drone_driver_sensor_ground_speed" default="ground_speed" />
+            <arg name="drone_driver_sensor_pressure" default="pressure" />
+            <arg name="drone_driver_sensor_status" default="status" />
+
+            <arg name="drone_okto_like_simulator_ground_speed_sensor_publisher" default="px4flow/opt_flow" />
+
+
+        <!-- supervisor - ros_graph_receiver-->
+            <arg name="supervisor_process_error_unified_notification" default="process_error_unified_notification" />
+            <arg name="supervisor_processes_performance" default="processes_performance" />
+
+        <!-- commands - user_commander -->
+            <arg name="pitchroll_topic" default="command/pitch_roll" />
+            <arg name="daltitude_topic" default="command/dAltitude" />
+            <arg name="dyawcmd_topic" default="command/dYaw" />
+            <arg name="command_publish_topic" default="droneMissionPlannerCommand" />
+            <arg name="drone_position_refs" default="dronePositionRefs" />
+            <arg name="drone_controller_yaw_ref_command" default="droneControllerYawRefCommand" />
+            <arg name="drone_speed_reference_topic" default="droneSpeedsRefs" />
+            <arg name="drone_manager_status" default="droneManagerStatus" />
+
+        <!-- camera - images_receiver -->
+            <arg name="drone_console_interface_sensor_bottom_camera" default="camera/bottom/image_raw" />
+            <arg name="drone_console_interface_sensor_front_camera" default="camera/front/image_raw" />
+
+        <!-- societyPose - society_pose_receiver -->
+            <arg name="society_pose" default="societyPose" />
+
+        <!-- odometry_state_receiver -->
+
+            <!-- EstimatedPose_droneGMR_wrt_GFF or ArucoSlam_EstimatedPose -->
+            <arg name="drone_pose_subscription" default="ArucoSlam_EstimatedPose" />
+
+            <!-- EstimatedSpeed_droneGMR_wrt_GFF or ArucoSlam_EstimatedSpeeds -->
+            <arg name="drone_speeds_subscription" default="ArucoSlam_EstimatedSpeeds" />
+
+
+            <arg name="drone_logger_position_ref_rebroadcast_subscription" default="trajectoryControllerPositionReferencesRebroadcast" />
+            <arg name="drone_logger_speed_ref_rebroadcast_subscription" default="trajectoryControllerSpeedReferencesRebroadcast" />
+        
+	    
+	    <!--mission_state_receiver -->
+            <arg name="drone_Current_Task_Topic_Name" default="current_task" />
+            <arg name="drone_Approved_Action_Topic_Name" default="approved_action" />
+            <arg name="my_stack_directory" default="$(env AEROSTACK_STACK)" />
+
+            <!--bounding_box_receiver-->
+                <arg name="bounding_box_topic" default="get_bounding_box"/>
+
+            <!-- obstacle receiver -->
+                <arg name="obstacles_topic" default="obstacles"/>
+
+            <!-- trajectory_abs_ref_command_receiver -->
+                <arg name="trajectory_topic" default="droneTrajectoryAbsRefCommand"/>
+
+            <arg name="stackPath" default="$(env AEROSTACK_STACK)"/>
+
+            <!-- public_event topic -->
+                <arg name="public_event_topic" default="/public_event"/>
+
+            <!-- drone event topic -->
+                <arg name="event_topic" default="event"/>
+
+        <!--Behavior_trees-->
+          <arg name="behavior_event" default="behavior_activation_finished"/>
+          <arg name="activate_behavior" default="request_behavior_activation"/>
+          <arg name="cancel_behavior" default="request_behavior_deactivation"/>
+          <arg name="initiate_behaviors" default="initiate_behaviors"/>
+          <arg name="add_belief" default="add_belief"/>
+
+        <!--Python mission-->
+            <arg name="pml_select_mission" default="python_based_mission_interpreter_process/select_mission_file"/>
+            <arg name="pml_mission_interpreter" default="python_based_mission_interpreter_process"/>
+
+        <!--Surface inspection-->
+            <arg name="surface_inspection_topic" default="surface_inspection_image"/>
+
+        <!--Opened window topic-->
+            <arg name="window_event_topic" default="window_event"/>
+
+    <group ns="$(arg robot_namespace)">
+        <param name="robot_namespace" value="$(arg robot_namespace)" />
+
+        <!-- Ardrone driver node -->
+        <node name="belief_memory_viewer_process" pkg="belief_memory_viewer" type="belief_memory_viewer" output="screen"/>
+
+        <!-- Topic Name ROS Params  -->
+            <!-- Commands - telemetry_state_receiver -->
+		<param name="drone_driver_command_drone_command_pitch_roll" value="$(arg drone_driver_command_drone_command_pitch_roll)" />
+                <param name="drone_driver_command_drone_command_daltitude" value="$(arg drone_driver_command_drone_command_daltitude )"/>
+                <param name="drone_driver_command_drone_command_dyaw" value="$(arg drone_driver_command_drone_command_dyaw)"/>
+                <param name="drone_driver_command_drone_hl_command" value="$(arg drone_driver_command_drone_hl_command)"/>
+                <param name="drone_okto_like_simulator_okto_commands_subscriber" value="$(arg drone_okto_like_simulator_okto_commands_subscriber)"/>
+
+                <param name="drone_console_interface_command_drone_command_pitch_roll_publication" value="$(arg drone_console_interface_command_drone_command_pitch_roll_publication)"/>
+                <param name="drone_console_interface_command_drone_command_daltitude_publication" value="$(arg drone_console_interface_command_drone_command_daltitude_publication)"/>
+
+            <!-- Sensor - telemetry_state_receiver -->
+                <param name="drone_driver_sensor_imu" value="$(arg drone_driver_sensor_imu)"/>
+                <param name="drone_driver_sensor_temperature" value="$(arg drone_driver_sensor_temperature)"/>
+                <param name="drone_driver_sensor_magnetometer" value="$(arg drone_driver_sensor_magnetometer)"/>
+                <param name="drone_driver_sensor_battery" value="$(arg drone_driver_sensor_battery)"/>
+                <param name="drone_driver_sensor_altitude" value="$(arg drone_driver_sensor_altitude)"/>
+                <param name="drone_driver_sensor_rotation_angles" value="$(arg drone_driver_sensor_rotation_angles)"/>
+                <param name="drone_driver_sensor_ground_speed" value="$(arg drone_driver_sensor_ground_speed)"/>
+                <param name="drone_driver_sensor_pressure" value="$(arg drone_driver_sensor_pressure)"/>
+                <param name="drone_driver_sensor_status" value="$(arg drone_driver_sensor_status)"/>
+
+                <param name="drone_okto_like_simulator_ground_speed_sensor_publisher" value="$(arg drone_okto_like_simulator_ground_speed_sensor_publisher)"/>
+
+
+            <!-- supervisor - ros_graph_receiver-->
+                <param name="supervisor_process_error_unified_notification" value="$(arg supervisor_process_error_unified_notification)"/>
+                <param name="supervisor_processes_performance" value="$(arg supervisor_processes_performance)"/>
+
+            <!-- commands - user_commander -->
+                <param name="pitchroll_topic" value="$(arg pitchroll_topic)"/>
+                <param name="daltitude_topic" value="$(arg daltitude_topic)"/>
+                <param name="dyawcmd_topic" value="$(arg dyawcmd_topic)"/>
+                <param name="command_publish_topic" value="$(arg command_publish_topic)"/>
+                <param name="drone_position_refs" value="$(arg drone_position_refs)"/>
+                <param name="drone_controller_yaw_ref_command" value="$(arg drone_controller_yaw_ref_command)"/>
+                <param name="drone_speed_reference_topic" value="$(arg drone_speed_reference_topic)"/>
+                <param name="drone_manager_status" value="$(arg drone_manager_status)"/>
+
+            <!-- camera - images_receiver -->
+                <param name="drone_console_interface_sensor_bottom_camera" value="$(arg drone_console_interface_sensor_bottom_camera)"/>
+                <param name="drone_console_interface_sensor_front_camera" value="$(arg drone_console_interface_sensor_front_camera)"/>
+
+             <!-- societyPose - society_pose_receiver -->
+                <param name="society_pose" value="$(arg society_pose)"/>
+
+        <!-- odometry_state_receiver -->
+                <param name="drone_pose_subscription" value="$(arg drone_pose_subscription)"/>
+                <param name="drone_speeds_subscription" value="$(arg drone_speeds_subscription)"/>
+
+                <param name="drone_logger_position_ref_rebroadcast_subscription" value="$(arg drone_logger_position_ref_rebroadcast_subscription)"/>
+                <param name="drone_logger_speed_ref_rebroadcast_subscription" value="$(arg drone_logger_speed_ref_rebroadcast_subscription)"/>
+        
+
+	    <!--mission_state_receiver -->
+                <param name="drone_Current_Task_Topic_Name" value="$(arg drone_Current_Task_Topic_Name)"/>
+                <param name="drone_Approved_Action_Topic_Name" value="$(arg drone_Approved_Action_Topic_Name)"/>
+
+            <!--bounding_box_receiver-->
+                <param name="bounding_box_topic" value="$(arg bounding_box_topic)"/>
+
+            <!-- obstacle receiver -->
+             	<param name="obstacles_topic" value="$(arg obstacles_topic)"/>
+
+            <!-- trajectory_abs_ref_command_receiver -->
+              	<param name="trajectory_topic" value="$(arg trajectory_topic)"/>
+
+	      	    <param name="stackPath" value="$(env AEROSTACK_STACK)" type="string"/>
+
+            <!-- public_event topic -->
+                <param name="public_event_topic" value="$(arg public_event_topic)"/>
+
+
+            <!-- drone event topic -->
+                <param name="event_topic" value="$(arg event_topic)"/>
+
+            <!--Behavior trees-->
+                <param name="topic_behavior_completed" value="$(arg behavior_event)" />
+                <param name="activate_behavior" value="$(arg activate_behavior)" />
+                <param name="cancel_behavior" value="$(arg cancel_behavior)" />
+                <param name="initiate_behaviors" value="$(arg initiate_behaviors)" />
+                <param name="add_belief" value="$(arg add_belief)" />
+
+            <!--Python mission-->
+                <param name="pml_select_mission" value="$(arg pml_select_mission)"/>
+                <param name="pml_mission_interpreter" value="$(arg pml_mission_interpreter)"/>
+
+            <!--Surface inspection-->
+                <param name="surface_inspection_topic" value="$(arg surface_inspection_topic)"/>
+            
+        <!--Opened window topic-->
+            <param name="window_event_topic" value="$(arg window_event_topic)" />
+
+
+    </group>
+</launch>

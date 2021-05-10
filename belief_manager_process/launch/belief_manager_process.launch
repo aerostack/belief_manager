@@ -1,0 +1,28 @@
+<launch>
+  <arg name="drone_id_namespace" default="drone1" />
+  <arg name="drone_id"           default="1" />
+  <arg name="my_stack_directory" default="$(env AEROSTACK_STACK)" />
+  <arg name="config_path"   default="$(env AEROSTACK_STACK)/configs/$(arg drone_id_namespace)" />
+  <arg name="config_file"   default="belief_manager_config.yaml" />
+
+  <arg name="increment"          default="1" />
+  <arg name="start_from"         default="0" />
+
+  <group ns="$(arg drone_id_namespace)">
+    <node name="belief_manager_process"
+          pkg="belief_manager_process"
+          type="belief_manager_process_main"
+          output="screen">
+      <param name="~drone_id_namespace"   value="$(arg drone_id_namespace)"   type="string" />
+      <param name="~drone_id"             value="$(arg drone_id)"             type="string" />
+      <param name="~config_path"          value="$(arg config_path)"          type="string" />
+      <param name="~config_file"          value="$(arg config_file)"          type="string" />      
+      <param name="~increment"            value="$(arg increment)"            type="string" />
+      <param name="~start_from"           value="$(arg start_from)"           type="string" />
+    </node>
+
+    <test test-name="belief_manager_process_test"
+          pkg="belief_manager_process"
+          type="belief_manager_process_test" />
+  </group>
+</launch>
