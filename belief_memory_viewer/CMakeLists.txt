@@ -34,8 +34,8 @@ set(BELIEF_MEMORY_VIEWER_HEADER_FILES
 
 set(CMAKE_AUTOMOC ON)
 
-find_package(catkin REQUIRED COMPONENTS droneMsgsROS rviz roscpp image_transport  cv_bridge std_msgs geometry_msgs angles lib_pugixml)
-catkin_package(INCLUDE_DIRS ${BELIEF_MEMORY_VIEWER_INCLUDE_DIR} ${BELIEF_MEMORY_VIEWER_INCLUDE_DIR} CATKIN_DEPENDS angles lib_pugixml DEPENDS yaml-cpp)
+find_package(catkin REQUIRED COMPONENTS droneMsgsROS rviz roscpp image_transport  cv_bridge std_msgs geometry_msgs angles pugixml)
+catkin_package(INCLUDE_DIRS ${BELIEF_MEMORY_VIEWER_INCLUDE_DIR} ${BELIEF_MEMORY_VIEWER_INCLUDE_DIR} CATKIN_DEPENDS angles pugixml DEPENDS yaml-cpp)
 
 include_directories(${BELIEF_MEMORY_VIEWER_INCLUDE_DIR})
 include_directories(${BELIEF_MEMORY_VIEWER_CONTROLLER_INCLUDE_DIR})
