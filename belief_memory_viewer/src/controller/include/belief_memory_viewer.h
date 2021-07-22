@@ -54,6 +54,8 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QProcess>
+#include <QtWidgets>
+
 
 #include "ui_belief_memory_viewer.h"
 #include "belief_memory_viewer_dialog.h"
