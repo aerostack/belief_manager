@@ -40,7 +40,7 @@ BeliefMemoryViewerDialog::BeliefMemoryViewerDialog(QWidget* parent, int caso, QT
   this->hideAllWidgets();
 
   // Nodes
-  n.param<std::string>("robot_namespace", drone_id_namespace, "drone1");
+  n.param<std::string>("drone_id_namespace", drone_id_namespace, "drone1");
   n.param<std::string>("check_behavior_format", check_behavior_format, "check_behavior_format");
   n.param<std::string>("check_belief_format", check_belief_format, "check_belief_format");
   n.param<std::string>("consult_available_behaviors", consult_available_behaviors, "consult_available_behaviors");

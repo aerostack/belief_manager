@@ -71,7 +71,7 @@ BeliefMemoryViewer::BeliefMemoryViewer(int argc, char** argv, QWidget* parent) :
 
   n.param<std::string>("remove_belief", remove_belief, "remove_belief");
   n.param<std::string>("all_beliefs", all_beliefs, "all_beliefs");
-  n.param<std::string>("robot_namespace", drone_id_namespace, "drone1");
+  n.param<std::string>("drone_id_namespace", drone_id_namespace, "drone1");
 
   remove_belief_srv = n.serviceClient<aerostack_msgs::RemoveBelief>(remove_belief);
   list_of_beliefs_sub =

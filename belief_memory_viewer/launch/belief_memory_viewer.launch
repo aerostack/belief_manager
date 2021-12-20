@@ -3,7 +3,7 @@
     <!-- master tag is only obeyed in the top-level file (not in includes) 
     <master>
     </master>-->
-    	<arg name="robot_namespace" default="drone1"/>
+    	<arg name="drone_id_namespace" default="drone1"/>
 
         <arg name="drone_driver_command_drone_command_pitch_roll" default="command/pitch_roll" />
         <arg name="drone_driver_command_drone_command_daltitude" default="command/dAltitude" />
@@ -101,8 +101,8 @@
         <!--Opened window topic-->
             <arg name="window_event_topic" default="window_event"/>
 
-    <group ns="$(arg robot_namespace)">
-        <param name="robot_namespace" value="$(arg robot_namespace)" />
+    <group ns="$(arg drone_id_namespace)">
+        <param name="drone_id_namespace" value="$(arg drone_id_namespace)" />
 
         <!-- Ardrone driver node -->
         <node name="belief_memory_viewer_process" pkg="belief_memory_viewer" type="belief_memory_viewer" output="screen"/>
